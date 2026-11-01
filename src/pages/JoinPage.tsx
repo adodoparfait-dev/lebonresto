@@ -1,5 +1,8 @@
-import { Check, Mail, Phone } from "lucide-react";
+import { Check, Mail, Phone, TriangleAlert } from "lucide-react";
 import { useState, type FormEvent } from "react";
+
+// Replace with your real Formspree form ID (formspree.io/f/<id>)
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
 
 const FORMULAS = [
   {
@@ -25,10 +28,29 @@ const FORMULAS = [
 
 export default function JoinPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setSubmitting(true);
+    const form = e.currentTarget;
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error("request failed");
+      setSubmitted(true);
+    } catch {
+      setError(
+        "Impossible d'envoyer votre demande pour le moment. Réessayez, ou contactez-nous directement.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -89,15 +111,16 @@ export default function JoinPage() {
         {submitted ? (
           <div className="mt-6 rounded-2xl border border-[var(--wine)]/10 bg-white p-6 text-center">
             <Check className="mx-auto text-[var(--wine)]" size={28} />
-            <p className="mt-2 font-semibold text-[var(--ink)]">Merci ! (démo)</p>
+            <p className="mt-2 font-semibold text-[var(--ink)]">Merci !</p>
             <p className="mt-1 text-sm text-[var(--ink-soft)]">
-              Dans la vraie plateforme, ce formulaire enverrait une demande de contact.
+              Votre demande a bien été envoyée, on vous recontacte très vite.
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-6 space-y-3 rounded-2xl border border-[var(--wine)]/10 bg-white p-6">
             <input
               required
+              name="restaurant"
               placeholder="Nom du restaurant"
               className="w-full rounded-lg border border-[var(--wine)]/15 px-3 py-2.5 text-sm outline-none focus:border-[var(--wine)]/40"
             />
@@ -106,6 +129,7 @@ export default function JoinPage() {
                 <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-soft)]" />
                 <input
                   required
+                  name="email"
                   type="email"
                   placeholder="Email"
                   className="w-full rounded-lg border border-[var(--wine)]/15 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-[var(--wine)]/40"
@@ -115,6 +139,7 @@ export default function JoinPage() {
                 <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--ink-soft)]" />
                 <input
                   required
+                  name="phone"
                   type="tel"
                   placeholder="Téléphone"
                   className="w-full rounded-lg border border-[var(--wine)]/15 py-2.5 pl-9 pr-3 text-sm outline-none focus:border-[var(--wine)]/40"
@@ -122,15 +147,23 @@ export default function JoinPage() {
               </div>
             </div>
             <textarea
+              name="message"
               placeholder="Quelques mots sur votre restaurant (optionnel)"
               rows={3}
               className="w-full resize-none rounded-lg border border-[var(--wine)]/15 px-3 py-2.5 text-sm outline-none focus:border-[var(--wine)]/40"
             />
+            {error && (
+              <div className="flex items-start gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+                <TriangleAlert size={15} className="mt-0.5 shrink-0" />
+                {error}
+              </div>
+            )}
             <button
               type="submit"
-              className="w-full rounded-full bg-[var(--wine)] py-2.5 text-sm font-semibold text-[var(--cream)] hover:bg-[var(--wine-dark)]"
+              disabled={submitting}
+              className="w-full rounded-full bg-[var(--wine)] py-2.5 text-sm font-semibold text-[var(--cream)] hover:bg-[var(--wine-dark)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Être recontacté
+              {submitting ? "Envoi..." : "Être recontacté"}
             </button>
           </form>
         )}

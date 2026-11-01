@@ -94,7 +94,7 @@ export default function HomePage({ navigate }: { navigate: (v: View) => void }) 
             <Feature
               icon={<TrendingDown size={22} />}
               title="Prix fixe"
-              description="49 à 149 €/mois selon la formule, quel que soit le nombre de commandes."
+              description="29 à 99 €/mois selon la formule, quel que soit le nombre de commandes."
             />
             <Feature
               icon={<Heart size={22} />}

@@ -7,20 +7,20 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
 const FORMULAS = [
   {
     name: "Visibilité",
-    price: 49,
+    price: 29,
     description: "Une page vitrine professionnelle pour être trouvé en ligne.",
     features: ["Page restaurant avec menu et photos", "Référencement local Lyon", "Fiche mise à jour en continu"],
   },
   {
     name: "Commande en ligne",
-    price: 99,
+    price: 59,
     description: "Le click & collect, sans commission sur les ventes.",
     features: ["Tout Visibilité", "Commande et paiement en ligne", "Gestion des créneaux de retrait"],
     highlight: true,
   },
   {
     name: "Premium",
-    price: 149,
+    price: 99,
     description: "Pour développer une vraie relation avec vos clients.",
     features: ["Tout Commande en ligne", "Mise en avant sur la plateforme", "Emailing et promotions ciblées"],
   },
@@ -61,7 +61,7 @@ export default function JoinPage() {
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-[var(--ink-soft)]">
           Un prix fixe, pas de commission, et vos clients qui restent les vôtres.
-          Frais d'installation unique de 200 à 300&nbsp;€ selon la formule.
+          Installation offerte pour les premiers restaurants partenaires.
         </p>
       </div>
 

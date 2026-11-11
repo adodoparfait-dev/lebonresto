@@ -108,7 +108,7 @@ export default function App() {
             <p className="font-display text-base text-[var(--wine)]">LeBonResto</p>
           </div>
           <p className="mt-1">La commande locale, par et pour les restaurateurs lyonnais.</p>
-          <p className="mt-3 text-xs">Prototype de démonstration — Lyon, France.</p>
+          <p className="mt-3 text-xs">Lyon, France.</p>
         </div>
       </footer>
     </div>

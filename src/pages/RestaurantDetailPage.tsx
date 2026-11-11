@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import type { View } from "../App";
 import { RESTAURANTS } from "../data/restaurants";
 
+const STRIPE_TEST_PAYMENT_LINK = "https://buy.stripe.com/test_5kQ14n5W4cyWgI46Nu9ws00";
+
 export default function RestaurantDetailPage({
   restaurantId,
   navigate,
@@ -62,10 +64,10 @@ export default function RestaurantDetailPage({
           <Check size={28} />
         </div>
         <h1 className="mt-5 font-display text-2xl font-semibold text-[var(--ink)]">
-          Commande envoyée (démo)
+          Paiement ouvert dans un nouvel onglet
         </h1>
         <p className="mt-2 text-[var(--ink-soft)]">
-          Dans la vraie plateforme, {restaurant.name} recevrait ta commande de{" "}
+          Une fois le paiement test confirmé, {restaurant.name} recevrait ta commande de{" "}
           {total.toFixed(2)}&nbsp;€ et la préparerait pour un retrait dans ~{restaurant.pickupMinutes} minutes.
         </p>
         <button
@@ -174,14 +176,17 @@ export default function RestaurantDetailPage({
                   <span>Total</span>
                   <span>{total.toFixed(2)} €</span>
                 </div>
-                <button
+                <a
+                  href={STRIPE_TEST_PAYMENT_LINK}
+                  target="_blank"
+                  rel="noreferrer"
                   onClick={() => setConfirmed(true)}
-                  className="mt-4 w-full rounded-full bg-[var(--wine)] py-2.5 text-sm font-semibold text-[var(--cream)] hover:bg-[var(--wine-dark)]"
+                  className="mt-4 block w-full rounded-full bg-[var(--wine)] py-2.5 text-center text-sm font-semibold text-[var(--cream)] hover:bg-[var(--wine-dark)]"
                 >
                   Commander — retrait sur place
-                </button>
+                </a>
                 <p className="mt-2 text-center text-xs text-[var(--ink-soft)]">
-                  Démo : aucun paiement réel n'est déclenché.
+                  Paiement en mode test Stripe. Utilise la carte 4242 4242 4242 4242, toute date future, tout CVC.
                 </p>
               </>
             )}

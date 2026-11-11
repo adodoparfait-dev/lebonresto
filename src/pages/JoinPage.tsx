@@ -1,8 +1,7 @@
 import { Check, Mail, Phone, TriangleAlert } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
-// Replace with your real Formspree form ID (formspree.io/f/<id>)
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mljbendz";
 
 const FORMULAS = [
   {
